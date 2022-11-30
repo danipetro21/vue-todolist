@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
     <title>ToDoList</title>
 </head>
 
@@ -14,20 +16,31 @@
 
 
         <div class="input-text">
-            <input type="text" v-model="myInput" placeholder="Aggiungi elementi alla lista">
+            <input type="text" v-model="myInput" @keyup.enter="addTask" placeholder="Aggiungi elementi alla lista">
             <button @click="addTask()">Aggiungi alla lista</button>
         </div>
 
-        <!-- test -->
-        You typed: <b>{{ myInput }}</b>
-        <!--  -->
+
+
+        <div class="error" v-if="error">
+            <h3>NON PUOI INSERIRE UN TASK VUOTO</h3>
+        </div>
 
         <div class="lista">
-            <ul>
-                <li v-for="task in tasks">
-                    {{ task.text }}
+            <ul v-if="tasks.length > 0">
+                <li v-for="(task , index) in tasks">
+                    <span>
+                        {{ task.text }}
+                    </span>
+
+                    <span> 
+                        <i class="fa-solid fa-trash" @click="removeTask(index)"></i>
+                    </span>
+
                 </li>
             </ul>
+
+            <h2 v-else>INSERISCI QUALCHE TASK</h2>
         </div>
 
 
